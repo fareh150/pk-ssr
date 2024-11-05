@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, Inject, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'about-page',
@@ -10,8 +10,12 @@ import { Title } from '@angular/platform-browser';
 })
 export default class AboutPageComponent implements OnInit {
   private title = inject(Title)
+  private meta = inject(Meta)
 
   ngOnInit(): void {
     this.title.setTitle('About Page')
+    this.meta.updateTag({ name: 'description', content: 'Este es mi About Page' })
+    this.meta.updateTag({ name: 'og:title', content: 'About Page' })
+    this.meta.updateTag({ name: 'keywords', content: 'Fareh,Romero,primer,ssr,angular,PRO,Curso' })
   }
 }
