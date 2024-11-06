@@ -3,9 +3,10 @@ import { PokemonListComponent } from "../../pokemons/components/pokemon-list/pok
 import { PokemonListSkeletonComponent } from "./ui/pokemon-list-skeleton/pokemon-list-skeleton.component";
 import { PokemonsService } from '../../pokemons/services/pokemons.service';
 import { SimplePokemon } from '../../pokemons/interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'pokemons-page',
@@ -23,6 +24,8 @@ export default class PokemonsPageComponent implements OnInit {
   public pokemons = signal<SimplePokemon[]>([])
 
   private route = inject(ActivatedRoute);
+  private router = inject(Router)
+  private title = inject(Title)
 
   public currentPage = toSignal(
     //to signal pilla un observable y lo convierte en un signal
@@ -42,10 +45,23 @@ export default class PokemonsPageComponent implements OnInit {
   public loadPokemon( page = 0 )
   {
     const pageToLoad = this.currentPage()! + page;
+
     this.pokemonsService.loadPage(pageToLoad)
+      .pipe(
+        tap(() =>
+          this.router.navigate([], { queryParams: { page: pageToLoad }})
+        ),
+        tap(() =>
+          this.title.setTitle(`Pokemons - Page ${pageToLoad}`)
+        )
+      )
       .subscribe( pokemons =>
       {
         this.pokemons.set(pokemons)
       })
   }
 }
+function tab(): import("rxjs").OperatorFunction<SimplePokemon[], unknown> {
+  throw new Error('Function not implemented.');
+}
+
