@@ -1,5 +1,5 @@
 <h1 class="text-3xl">Listado de Pokemons</h1>
-<h2 class="text-xl">Pagina Actual</h2>
+<h2 class="text-xl">Pagina Actual: {{ currentPage() }}</h2>
 
 <hr class="my-2">
 
@@ -13,7 +13,7 @@
 <!-- TODO: Buttons Cargar siguiente y anteriores -->
 
 <div class="flex justify-between">
-  <button class="mt-2">Anteriores</button>
+  <button (click)="loadPokemon(-1)" class="mt-2">Anteriores</button>
 
-  <button class="mt-2">Siguientes</button>
+  <button (click)="loadPokemon(+1)" class="mt-2">Siguientes</button>
 </div>
