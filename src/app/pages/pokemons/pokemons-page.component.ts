@@ -12,25 +12,8 @@ import { PokemonListSkeletonComponent } from "./ui/pokemon-list-skeleton/pokemon
   templateUrl: './pokemons-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class PokemonsPageComponent implements OnInit, OnDestroy {
-  public isLoading = signal(true);
-
-  private appRef = inject(ApplicationRef);
-
-  private $appStable = this.appRef.isStable.subscribe( isStable =>
-  {
-    console.log({isStable});
-  });
-
+export default class PokemonsPageComponent implements OnInit {
   ngOnInit(): void {
-    setTimeout(() => {
-      this.isLoading.set(false)
-    }, 5000)
+
   }
-
-  ngOnDestroy(): void {
-    this.$appStable.unsubscribe();
-  }
-
-
 }
