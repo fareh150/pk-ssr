@@ -1,0 +1,6 @@
+/pokemons/pages/1
+/pokemons/pages/2
+/pokemons/pages/3
+/pokemons/pages/4
+/pokemons/pages/5
+/pokemons/aerodactyl
