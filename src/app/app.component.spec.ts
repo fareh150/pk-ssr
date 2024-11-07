@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { provideRouter } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 
@@ -17,21 +17,29 @@ describe('AppComponent', () => {
   class NavbarComponentMock {}
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent],
-      providers: [
-        provideRouter([])
-      ]
-    })
-    .overrideComponent(AppComponent, {
-      add:{
-        imports: [NavbarComponentMock]
-      },
-      remove: {
-        imports: [NavbarComponent]
+    // otra forma de hacer lo mismo que el recomendado  (perde mucha informacion)
+    TestBed.overrideComponent(AppComponent, {
+      set: {
+        imports: [NavbarComponentMock],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }
-    })
-    .compileComponents();
+    });
+
+    // ! Recomendado
+    //await TestBed.configureTestingModule({
+    //  imports: [AppComponent],
+    //  providers: [
+    //    provideRouter([])
+    //  ]
+    //})
+    //.overrideComponent(AppComponent, {
+    //  add:{
+    //    imports: [NavbarComponentMock]
+    //  },
+    //  remove: {
+    //    imports: [NavbarComponent]
+    //  }
+    //})
     //.compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
