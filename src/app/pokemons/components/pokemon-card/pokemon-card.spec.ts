@@ -31,8 +31,6 @@ describe('PokemonCardComponent', () => {
   });
 
   it('should create the app', () => {
-    console.log(compiled);
-
     expect(component).toBeTruthy();
   });
 
