@@ -46,13 +46,11 @@ export default class PokemonsPageComponent {
 
   public loadPokemon( page = 0 )
   {
-    const pageToLoad = this.currentPage()! + page;
-
     this.pokemonsService
-      .loadPage(pageToLoad)
+      .loadPage(page)
       .pipe(
         tap(() =>
-          this.title.setTitle(`Pokemons - Page ${pageToLoad}`)
+          this.title.setTitle(`Pokemons - Page ${page}`)
         )
       )
       .subscribe( pokemons =>
