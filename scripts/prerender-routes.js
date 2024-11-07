@@ -1,5 +1,5 @@
-const TOTAL_POKEMONS = 10;
-const NUMBER_OF_PAGES_TO_ADD = 10;
+const TOTAL_POKEMONS = 151;
+const NUMBER_OF_PAGES_TO_ADD = 20;
 
 //funcion anonima autoejecutable
 ( async () =>
@@ -12,14 +12,22 @@ const NUMBER_OF_PAGES_TO_ADD = 10;
  let fileContent
 
  let ids= pokemonIds.map(
-  id => `/pokemon/${id}`
- )
+  id => `/pokemons/${id}`
+ ).join('\n')
 
  let pages= pokemonsPages.map(
   page => `/pokemons/page/${page}`
- )
+ ).join('\n')
 
- fileContent = ids.join('\n') + '\n' + pages.join('\n');
+ //Links por nombre del pokemon
+ const pokemonNameList = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${TOTAL_POKEMONS}`)
+ .then(res => res.json())
+
+ const pokemonNameToAdd = pokemonNameList.results.map(
+  pokemon => `/pokemons/${pokemon.name}`
+ ).join('\n')
+
+ fileContent = ids + '\n' + pages + '\n' + pokemonNameToAdd;
 
  fs.writeFileSync('routes.txt', fileContent);
 
