@@ -35,4 +35,28 @@ describe('PokemonCardComponent', () => {
 
     expect(component).toBeTruthy();
   });
+
+  it('should have the SimplePokemon signal inputValue',() =>
+  {
+    expect(component.pokemon()).toEqual(mockPokemon);
+  })
+
+  it('should render the pokemon name and image correctly', () =>
+  {
+    const pokemonImage = compiled.querySelector('img') as HTMLImageElement;
+    const pokemonName = compiled.querySelector('h2') as HTMLHeadElement;
+
+    expect(pokemonImage.src).toContain(mockPokemon.id);
+    // correct way to test the image src
+    //expect(pokemonImage.src).toBe(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${mockPokemon.id}.png`)
+    expect(pokemonName.textContent).toBe(mockPokemon.name);
+  })
+
+  it('should have the proper ng-reflect-router-link', () =>
+  {
+    const divWithLink = compiled.querySelector('div') as HTMLDivElement;
+
+    expect(divWithLink.attributes.getNamedItem('ng-reflect-router-link')?.value).toBe(`/pokemons,${mockPokemon.name}`);
+
+  })
 });
