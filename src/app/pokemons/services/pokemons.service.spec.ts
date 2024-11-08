@@ -80,4 +80,19 @@ describe('PokemonsService', () =>
     // use false data
     req.flush(mockPokeApiResponse)
   })
+
+  it('should load a page 5 of simplePokemons',() =>
+  {
+    service.loadPage(5).subscribe(pokemons =>
+    {
+      expect(pokemons).toEqual(expectedPokemons);
+    })
+
+    const req = httpMock
+      .expectOne(`https://pokeapi.co/api/v2/pokemon?offset=80&limit=20`)
+
+    expect(req.request.method).toBe('GET');
+
+    req.flush(mockPokeApiResponse)
+  })
 });
