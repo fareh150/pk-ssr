@@ -21,7 +21,7 @@ export class PokemonsService {
 
     return this.http
     .get<PokeAPIResponse>(
-      `https://pokeapi.co/api/v2/pokemon?offset=${page * 20}& limit=20`
+      `https://pokeapi.co/api/v2/pokemon?offset=${page * 20}&limit=20`
     ).pipe(
       map( (resp) =>
       {
