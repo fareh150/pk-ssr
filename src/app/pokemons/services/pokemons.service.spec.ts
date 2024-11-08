@@ -33,7 +33,7 @@ const expectedPokemons: SimplePokemon[] = [
   },
 ];
 
-const mockPokemon = {
+const mockPokemon: any = {
   id: '1',
   name: 'bulbasaur',
 }
@@ -94,5 +94,20 @@ describe('PokemonsService', () =>
     expect(req.request.method).toBe('GET');
 
     req.flush(mockPokeApiResponse)
+  })
+
+  it('should load a pokemon by id',() =>
+  {
+    service.loadPokemon('1').subscribe(pokemon =>
+    {
+      expect(pokemon).toEqual(mockPokemon);
+    })
+
+    const req = httpMock
+      .expectOne(`https://pokeapi.co/api/v2/pokemon/${mockPokemon.id}`)
+
+    expect(req.request.method).toBe('GET');
+
+    req.flush(mockPokemon)
   })
 });
