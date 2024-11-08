@@ -110,4 +110,21 @@ describe('PokemonsService', () =>
 
     req.flush(mockPokemon)
   })
+
+  it('should load a pokemon by name',() =>
+  {
+    const pokemonName = 'bulbasaur';
+
+    service.loadPokemon(pokemonName).subscribe(pokemon =>
+    {
+      expect(pokemon).toEqual(mockPokemon);
+    })
+
+    const req = httpMock
+      .expectOne(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+
+    expect(req.request.method).toBe('GET');
+
+    req.flush(mockPokemon)
+  })
 });
